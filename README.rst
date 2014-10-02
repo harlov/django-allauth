@@ -2,6 +2,8 @@
 Welcome to django-allauth!
 ==========================
 
+forked version with support vk scope
+
 .. image:: https://badge.fury.io/py/django-allauth.png
    :target: http://badge.fury.io/py/django-allauth
 
