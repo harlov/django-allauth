@@ -31,9 +31,9 @@ class VKProvider(OAuth2Provider):
     account_class = VKAccount
 
     def get_default_scope(self):
-        scope = []
-        if app_settings.QUERY_EMAIL:
-            scope.append('email')
+        scope = ['offline','friends','email']
+        #if app_settings.QUERY_EMAIL:
+        #    scope.append('email')
         return scope
 
     def extract_uid(self, data):
