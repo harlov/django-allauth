@@ -61,7 +61,6 @@ def _login_social_account(request, sociallogin):
 
 
 def render_authentication_error(request, extra_context={}, error_template="socialaccount/authentication_error.html"):
-    print("socialaccount/authentication_error.html")
     return render_to_response(
         error_template,
         extra_context, context_instance=RequestContext(request))
