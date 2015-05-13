@@ -37,16 +37,16 @@ class YandexOAuth2Provider(OAuth2Provider):
         return str(data['id'])
 
     def get_profile_fields(self):
-        default_fields = ['id',
-                          'first-name',
-                          'last-name',
-                          'email-address',
-                          'picture-url',
-                          'picture-urls::(original)',  # picture-urls::(original) is higher res
-                          'public-profile-url']
-        fields = self.get_settings().get('PROFILE_FIELDS',
-                                         default_fields)
-        return fields
+        #default_fields = ['id',
+        #                  'first-name',
+        #                  'last-name',
+        #                  'email-address',
+        #                  'picture-url',
+        #                  'picture-urls::(original)',  # picture-urls::(original) is higher res
+        #                  'public-profile-url']
+        #fields = self.get_settings().get('PROFILE_FIELDS',
+        #                                 default_fields)
+        return []
 
     def get_default_scope(self):
         scope = []

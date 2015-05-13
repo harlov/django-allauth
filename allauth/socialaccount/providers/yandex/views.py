@@ -8,9 +8,9 @@ from .provider import YandexOAuth2Provider
 
 class YandexOAuth2Adapter(OAuth2Adapter):
     provider_id = YandexOAuth2Provider.id
-    access_token_url = 'https://api.linkedin.com/uas/oauth2/accessToken'
+    #access_token_url = 'https://api.linkedin.com/uas/oauth2/accessToken'
     authorize_url = 'https://oauth.yandex.ru/authorize'
-    profile_url = 'https://api.linkedin.com/v1/people/~'
+    profile_url = 'https://login.yandex.ru/info'
     supports_state = False
 
     access_token_method = 'GET'
@@ -24,7 +24,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
             .by_id(YandexOAuth2Provider.id) \
             .get_profile_fields()
         url = self.profile_url + ':(%s)?format=json' % ','.join(fields)
-        resp = requests.get(url, params={'oauth2_access_token': token.token})
+        resp = requests.get(url, params={'oauth_token': token.token})
         return resp.json()
 
 oauth2_login = OAuth2LoginView.adapter_view(YandexOAuth2Adapter)
