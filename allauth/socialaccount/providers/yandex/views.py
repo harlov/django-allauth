@@ -18,7 +18,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
     access_token_method = 'POST'
 
     def getErrorTemplate(self):
-        tmpl = providers.registry.by_id(YandexOAuth2Provider.id).get('BAD_DOMAIN_TEMPLATE')
+        tmpl = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('BAD_DOMAIN_TEMPLATE')
         if tmpl is not None:
             return tmpl
 
