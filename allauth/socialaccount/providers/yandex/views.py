@@ -23,7 +23,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
         fields = providers.registry \
             .by_id(YandexOAuth2Provider.id) \
             .get_profile_fields()
-        url = self.profile_url + ':(%s)?format=json' % ','.join(fields)
+        url = self.profile_url + '?format=json'
         print(url)
         print(token.token)
         resp = requests.get(url, params={'oauth_token': token.token})
