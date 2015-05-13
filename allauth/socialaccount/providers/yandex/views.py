@@ -4,7 +4,7 @@ from allauth.socialaccount.providers.oauth2.views import (OAuth2Adapter,
                                                           OAuth2LoginView,
                                                           OAuth2CallbackView)
 from allauth.exceptions import ImmediateHttpResponse
-
+from django.shortcuts import redirect
 from .provider import YandexOAuth2Provider
 
 class YandexOAuth2Adapter(OAuth2Adapter):
@@ -17,12 +17,13 @@ class YandexOAuth2Adapter(OAuth2Adapter):
     access_token_method = 'POST'
 
     def complete_login(self, request, app, token, **kwargs):
+        provider = providers.registry.by_id(YandexOAuth2Provider.id)
         extra_data = self.get_user_info(token)
         user,domain = extra_data['default_email'].split('@')
-        only_domain = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('ONLY_DOMAIN')
+        only_domain = provider.get_settings().get('ONLY_DOMAIN')
         if domain is not only_domain:
             print('BAD DOMAIN')
-            return
+            return redirect(provider.get_settings().get('BAD_DOMAIN_REDIRECT'))
         return self.get_provider().sociallogin_from_response(request, extra_data)
 
     def get_user_info(self, token):
