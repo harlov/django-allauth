@@ -30,7 +30,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
         user,domain = extra_data['default_email'].split('@')
         only_domain = provider.get_settings().get('ONLY_DOMAIN')
         if domain is not only_domain:
-            print('BAD DOMAIN')
+            print('BAD DOMAIN: '+domain)
             self.bad_domain = True
             raise OAuth2Error
             #return redirect(provider.get_settings().get('BAD_DOMAIN_REDIRECT'))
