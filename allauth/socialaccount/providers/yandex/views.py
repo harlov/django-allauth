@@ -6,7 +6,8 @@ from allauth.socialaccount.providers.oauth2.views import (OAuth2Adapter,
 from allauth.exceptions import ImmediateHttpResponse
 from django.shortcuts import redirect
 from .provider import YandexOAuth2Provider
-
+from allauth.socialaccount.providers.oauth2.client import (OAuth2Client,
+                                                           OAuth2Error)
 class YandexOAuth2Adapter(OAuth2Adapter):
     provider_id = YandexOAuth2Provider.id
     access_token_url = 'https://oauth.yandex.ru/token'
@@ -23,7 +24,8 @@ class YandexOAuth2Adapter(OAuth2Adapter):
         only_domain = provider.get_settings().get('ONLY_DOMAIN')
         if domain is not only_domain:
             print('BAD DOMAIN')
-            return redirect(provider.get_settings().get('BAD_DOMAIN_REDIRECT'))
+            raise OAuth2Error
+            #return redirect(provider.get_settings().get('BAD_DOMAIN_REDIRECT'))
         return self.get_provider().sociallogin_from_response(request, extra_data)
 
     def get_user_info(self, token):
