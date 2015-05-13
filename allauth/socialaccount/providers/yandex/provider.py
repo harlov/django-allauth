@@ -53,9 +53,9 @@ class YandexOAuth2Provider(OAuth2Provider):
         return scope
 
     def extract_common_fields(self, data):
-        return dict(email=data.get('emailAddress'),
-                    first_name=data.get('firstName'),
-                    last_name=data.get('lastName'))
+        return dict(email=data.get('login'),
+                    first_name=data.get('first_name'),
+                    last_name=data.get('last_name'))
 
 
 providers.registry.register(YandexOAuth2Provider)
