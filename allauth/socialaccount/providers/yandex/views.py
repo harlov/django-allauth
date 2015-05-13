@@ -3,6 +3,7 @@ from allauth.socialaccount import providers
 from allauth.socialaccount.providers.oauth2.views import (OAuth2Adapter,
                                                           OAuth2LoginView,
                                                           OAuth2CallbackView)
+from allauth.exceptions import ImmediateHttpResponse
 
 from .provider import YandexOAuth2Provider
 
@@ -21,7 +22,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
         only_domain = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('ONLY_DOMAIN')
         if domain is not only_domain:
             print('BAD DOMAIN')
-            self.supports_state = False
+            return
         return self.get_provider().sociallogin_from_response(request, extra_data)
 
     def get_user_info(self, token):
