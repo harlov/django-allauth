@@ -20,6 +20,8 @@ class YandexOAuth2Adapter(OAuth2Adapter):
     def getErrorTemplate(self):
         if self.bad_domain:
             tmpl = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('BAD_DOMAIN_TEMPLATE')
+        else:
+            tmpl = None
         return tmpl
 
     def complete_login(self, request, app, token, **kwargs):
