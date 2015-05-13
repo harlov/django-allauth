@@ -14,13 +14,13 @@ class YandexOAuth2Adapter(OAuth2Adapter):
     authorize_url = 'https://oauth.yandex.ru/authorize'
     profile_url = 'https://login.yandex.ru/info'
     supports_state = False
-
+    bad_domain = False
     access_token_method = 'POST'
 
     def getErrorTemplate(self):
-        tmpl = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('BAD_DOMAIN_TEMPLATE')
-        if tmpl is not None:
-            return tmpl
+        if self.bad_domain:
+            tmpl = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('BAD_DOMAIN_TEMPLATE')
+        return tmpl
 
     def complete_login(self, request, app, token, **kwargs):
         provider = providers.registry.by_id(YandexOAuth2Provider.id)
@@ -29,6 +29,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
         only_domain = provider.get_settings().get('ONLY_DOMAIN')
         if domain is not only_domain:
             print('BAD DOMAIN')
+            self.bad_domain = True
             raise OAuth2Error
             #return redirect(provider.get_settings().get('BAD_DOMAIN_REDIRECT'))
         return self.get_provider().sociallogin_from_response(request, extra_data)
