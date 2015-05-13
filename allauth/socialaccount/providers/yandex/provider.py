@@ -27,10 +27,10 @@ class YandexOAuth2Account(ProviderAccount):
 
 
 class YandexOAuth2Provider(OAuth2Provider):
-    id = 'yandex_oauth2'
+    id = 'yandex'
     # Name is displayed to ordinary users -- don't include protocol
     name = 'Yandex'
-    package = 'allauth.socialaccount.providers.yandex_oauth2'
+    package = 'allauth.socialaccount.providers.yandex'
     account_class = YandexOAuth2Account
 
     def extract_uid(self, data):
