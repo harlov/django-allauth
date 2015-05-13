@@ -17,6 +17,11 @@ class YandexOAuth2Adapter(OAuth2Adapter):
 
     def complete_login(self, request, app, token, **kwargs):
         extra_data = self.get_user_info(token)
+        user,domain = extra_data['default_email'].split('@')
+        only_domain = self.get_settings().get('ONLY_DOMAIN')
+        if domain is not only_domain:
+            print('BAD DOMAIN')
+            self.supports_state = False
         return self.get_provider().sociallogin_from_response(request, extra_data)
 
     def get_user_info(self, token):
@@ -24,8 +29,6 @@ class YandexOAuth2Adapter(OAuth2Adapter):
             .by_id(YandexOAuth2Provider.id) \
             .get_profile_fields()
         url = self.profile_url + '?format=json'
-        print(url)
-        print(token.token)
         resp = requests.get(url, params={'oauth_token': token.token})
         return resp.json()
 
