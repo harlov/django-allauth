@@ -8,7 +8,7 @@ from .provider import YandexOAuth2Provider
 
 class YandexOAuth2Adapter(OAuth2Adapter):
     provider_id = YandexOAuth2Provider.id
-    #access_token_url = 'https://api.linkedin.com/uas/oauth2/accessToken'
+    access_token_url = '#'
     authorize_url = 'https://oauth.yandex.ru/authorize'
     profile_url = 'https://login.yandex.ru/info'
     supports_state = False
