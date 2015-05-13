@@ -61,6 +61,7 @@ class YandexOAuth2Provider(OAuth2Provider):
                     last_name=data.get('last_name'),
                     username=username
                    )
+        print(res)
         return res
 
 
