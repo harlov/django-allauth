@@ -18,7 +18,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
     def complete_login(self, request, app, token, **kwargs):
         extra_data = self.get_user_info(token)
         user,domain = extra_data['default_email'].split('@')
-        only_domain = self.get_settings().get('ONLY_DOMAIN')
+        only_domain = providers.registry.by_id(YandexOAuth2Provider.id).get_settings().get('ONLY_DOMAIN')
         if domain is not only_domain:
             print('BAD DOMAIN')
             self.supports_state = False
