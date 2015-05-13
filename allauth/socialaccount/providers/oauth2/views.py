@@ -111,4 +111,7 @@ class OAuth2CallbackView(OAuth2View):
                 login.state = SocialLogin.unstash_state(request)
             return complete_social_login(request, login)
         except (OAuth2Error, PermissionDenied):
-            return render_authentication_error(request)
+            if self.adapter.getErrorTemplate() is not None:
+                return render_authentication_error(request, error_template=self.adapter.getErrorTemplate())
+            else:
+                return render_authentication_error(request)
