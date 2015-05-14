@@ -37,6 +37,8 @@ class SignupForm(BaseSignupForm):
         return user
 
     def raise_duplicate_email_error(self):
+        print('exist email')
+        print(self.sociallogin.account)
         raise forms.ValidationError(
             _("An account already exists with this e-mail address."
               " Please sign in to that account first, then connect"
