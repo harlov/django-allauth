@@ -34,6 +34,7 @@ class YandexOAuth2Adapter(OAuth2Adapter):
             self.bad_domain = True
             raise OAuth2Error
             #return redirect(provider.get_settings().get('BAD_DOMAIN_REDIRECT'))
+
         return self.get_provider().sociallogin_from_response(request, extra_data)
 
     def get_user_info(self, token):

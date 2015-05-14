@@ -3,6 +3,7 @@ from __future__ import absolute_import
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
 from django.core.exceptions import ValidationError
+from django.contrib.auth.models import User
 
 from ..utils import (import_attribute,
                      email_address_exists,
@@ -119,6 +120,8 @@ class DefaultSocialAccountAdapter(object):
             if email:
                 if account_settings.UNIQUE_EMAIL:
                     if email_address_exists(email):
+                        #GTFO!
+                        sociallogin.account.user = User.objects.get(email=email)
                         # Oops, another user already has this address.  We
                         # cannot simply connect this social account to the
                         # existing user. Reason is that the email adress may
@@ -127,7 +130,7 @@ class DefaultSocialAccountAdapter(object):
                         # the hope that you fall in their trap.  We cannot check
                         # on 'email_address.verified' either, because
                         # 'email_address' is not guaranteed to be verified.
-                        auto_signup = False
+                        #auto_signup = False
                         # FIXME: We redirect to signup form -- user will
                         # see email address conflict only after posting
                         # whereas we detected it here already.
