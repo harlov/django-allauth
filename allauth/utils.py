@@ -40,8 +40,15 @@ def _generate_unique_username_base(txts):
 
 def generate_unique_username(txts):
     from .account.app_settings import USER_MODEL_USERNAME_FIELD
-    username = _generate_unique_username_base(txts)
     User = get_user_model()
+    try:
+        user = User.objects.get(email=txts[2])
+        return user.username
+    except User.DoesNotExist:
+        print('user not exist, email %s' % (txts[2]))
+
+    username = _generate_unique_username_base(txts)
+
     try:
         max_length = User._meta.get_field(USER_MODEL_USERNAME_FIELD).max_length
     except FieldDoesNotExist:
